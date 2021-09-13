@@ -1,33 +1,48 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import React, { useState } from "react";
+import { Text, Header, Button, ThemeProvider, Input } from 'react-native-elements';
+import { View } from "react-native";
 import { RootTabScreenProps } from '../types';
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+  const [activity, setActivity] = useState()
+  const [participants, setParticipants] = useState()
+  const [category, setCategory] = useState()
+  
+
+  async function getActivity() {
+    const response = await fetch('http://www.boredapi.com/api/activity/')
+    const bored = await response.json()
+    setActivity(bored.activity)
+    setParticipants(bored.participants)
+    setCategory(bored.type)
+    console.log(bored)
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>I'm Bored</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      {/* <EditScreenInfo path="/screens/TabOneScreen.tsx" /> */}
-    </View>
+    <ThemeProvider>
+      <Header
+        leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
+        centerComponent={{ text: 'I\'m bored', style: { color: '#fff' } }}
+        rightComponent={{ icon: 'home', color: '#fff' }}
+        containerStyle={{
+          backgroundColor: '#3D6DCC'
+        }}
+      />
+      
+        <Input placeholder='Participants'>Hello</Input>
+        <Input placeholder='Participants'>Hello</Input>
+
+        <Text h4 style={{color: '#fff'}}>{activity}</Text>
+        <Text h4 style={{color: '#fff'}}>Participants: {participants}</Text>
+        <Text h4 style={{color: '#fff'}}>Category: {category}</Text>
+        <View>
+          <Button
+            title="Give me something to do, I'm bored"
+            onPress={() => {
+              getActivity()
+            }}
+          />
+        </View>
+  </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
