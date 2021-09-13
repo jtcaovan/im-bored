@@ -19,30 +19,9 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   }
 
   return (
-    <ThemeProvider>
-      <Header
-        leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
-        centerComponent={{ text: 'I\'m bored', style: { color: '#fff' } }}
-        rightComponent={{ icon: 'home', color: '#fff' }}
-        containerStyle={{
-          backgroundColor: '#3D6DCC'
-        }}
-      />
-      
-        <Input placeholder='Participants'>Hello</Input>
-        <Input placeholder='Participants'>Hello</Input>
-
-        <Text h4 style={{color: '#fff'}}>{activity}</Text>
-        <Text h4 style={{color: '#fff'}}>Participants: {participants}</Text>
-        <Text h4 style={{color: '#fff'}}>Category: {category}</Text>
-        <View>
-          <Button
-            title="Give me something to do, I'm bored"
-            onPress={() => {
-              getActivity()
-            }}
-          />
-        </View>
+    <ThemeProvider>  
+        <Input placeholder='Participants'></Input>
+        <Input placeholder='Category'></Input>
   </ThemeProvider>
   );
 }
